@@ -1,0 +1,375 @@
+@import "tailwindcss" source(none);
+@import "tw-animate-css";
+@source "../src";
+
+@custom-variant dark (&:is(.dark *));
+
+/* 1. Tailored Design System Tokens (Mapped to Babalola Folio & DESIGN.md) */
+:root {
+  /* Color Palette (sRGB & Hex Tokens) */
+  --bg: #0A0A0C;
+  --surface: #121216;
+  --surface-elevated: #1A1A21;
+  --text: #F5F5F7;
+  --text-muted: #A1A1AA;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.22);
+  --primary: #3B82F6;
+  --primary-hover: #60A5FA;
+  --primary-glow: rgba(59, 130, 246, 0.25);
+  --accent-cyan: #22D3EE;
+  --accent-violet: #8B5CF6;
+  --success: #34D399;
+  --error: #F87171;
+  --focus-ring: #22D3EE;
+  --overlay: rgba(10, 10, 12, 0.8);
+
+  /* Gradients */
+  --gradient-main: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 50%, #22D3EE 100%);
+  --gradient-glow: radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, rgba(10, 10, 12, 0) 70%);
+  --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+
+  /* Typography & Timing Tokens */
+  --font-sans: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --ease-signature: cubic-bezier(0.04, 0.3, 0.4, 1.01);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --dur-fast: 0.25s;
+  --dur-base: 0.55s;
+  --dur-slow: 0.75s;
+  --dur-reveal: 0.9s;
+
+  /* shadcn/ui and Tailwind mapped theme variables */
+  --radius: 0.75rem;
+  --background: oklch(0.13 0.01 260);     /* #0A0A0C */
+  --foreground: oklch(0.97 0.005 260);    /* #F5F5F7 */
+  --card: oklch(0.16 0.01 260);          /* #121216 */
+  --card-foreground: oklch(0.97 0.005 260);
+  --popover: oklch(0.16 0.01 260);
+  --popover-foreground: oklch(0.97 0.005 260);
+  --primary-oklch: oklch(0.62 0.21 255); /* #3B82F6 */
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.20 0.015 260);    /* #1A1A21 */
+  --secondary-foreground: oklch(0.97 0.005 260);
+  --muted: oklch(0.20 0.015 260);
+  --muted-foreground: oklch(0.70 0.02 260); /* #A1A1AA */
+  --accent: oklch(0.20 0.015 260);
+  --accent-foreground: oklch(0.97 0.005 260);
+  --destructive: oklch(0.63 0.22 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border-oklch: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.82 0.14 210);           /* #22D3EE */
+  --sidebar: oklch(0.13 0.01 260);
+  --sidebar-foreground: oklch(0.97 0.005 260);
+  --sidebar-primary: oklch(0.62 0.21 255);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.20 0.015 260);
+  --sidebar-accent-foreground: oklch(0.97 0.005 260);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.82 0.14 210);
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 8px);
+  --radius-2xl: calc(var(--radius) + 12px);
+  --radius-3xl: calc(var(--radius) + 16px);
+  --radius-4xl: calc(var(--radius) + 20px);
+  --radius-pill: 9999px;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary-oklch);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border-oklch);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* 2. Base Styles */
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    color-scheme: dark;
+    background-color: var(--bg);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* Desktop Fine Cursor Support */
+  @media (hover: hover) and (pointer: fine) {
+    body, a, button {
+      cursor: none !important;
+    }
+  }
+
+  @media (max-width: 767px) {
+    body, a, button {
+      cursor: auto !important;
+    }
+  }
+
+  ::selection {
+    background: rgba(59, 130, 246, 0.35);
+    color: #FFFFFF;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+/* 3. Utilities & Animations */
+@utility text-gradient {
+  background: var(--gradient-main);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+@utility nav-link {
+  position: relative;
+  display: inline-block;
+  color: var(--text-muted);
+  transition: color var(--dur-fast) var(--ease-out);
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 1.5px;
+    background: var(--accent-cyan);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease-out);
+  }
+  &:hover {
+    color: var(--text);
+  }
+  &:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+@utility marquee-track {
+  animation: marquee 25s linear infinite;
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* 4. Custom Components (Katherine Le Physics + Babalola Spec) */
+a.btn-pill,
+button.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  padding: 16px 44px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--dur-base) var(--ease-signature),
+              color var(--dur-base) var(--ease-signature),
+              box-shadow var(--dur-base) var(--ease-signature),
+              transform var(--dur-base) var(--ease-signature);
+}
+
+a.btn-pill:hover,
+button.btn-pill:hover {
+  border-color: var(--primary);
+  color: #FFFFFF;
+  box-shadow: 0 0 24px var(--primary-glow);
+  transform: translateY(-2px);
+}
+
+a.btn-pill-primary,
+button.btn-pill-primary {
+  background: var(--gradient-main);
+  border: 1px solid transparent;
+  color: #FFFFFF;
+  box-shadow: 0 0 24px rgba(59, 130, 246, 0.3);
+}
+
+a.btn-pill-primary:hover,
+button.btn-pill-primary:hover {
+  box-shadow: 0 0 32px rgba(59, 130, 246, 0.5);
+  transform: translateY(-2px);
+}
+
+.project-card {
+  position: relative;
+  background-color: var(--surface);
+  background-image: var(--gradient-card);
+  border: 1px solid var(--border);
+  border-radius: 32px;
+  overflow: hidden;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transition: border-color var(--dur-base) var(--ease-signature),
+              transform var(--dur-base) var(--ease-signature);
+}
+
+.project-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-4px);
+}
+
+.project-card .card-media {
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: var(--bg);
+}
+
+.project-card .card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-signature);
+}
+
+.project-card:hover .card-media img {
+  transform: scale(1.03);
+}
+
+/* 5. Showcase & Other Designs Slider */
+.other-designs-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  padding: 32px 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+.other-designs-viewport::-webkit-scrollbar {
+  height: 6px;
+}
+.other-designs-viewport::-webkit-scrollbar-thumb {
+  background: var(--surface-elevated);
+  border-radius: 3px;
+}
+.other-designs-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: other-designs-scroll 90s linear infinite;
+  align-items: center;
+}
+.other-designs-track:has(.other-designs-item:hover) {
+  animation-play-state: paused;
+}
+.other-designs-item {
+  flex: 0 0 auto;
+  width: 220px;
+  filter: grayscale(100%);
+  transition: transform 0.4s var(--ease-out), filter 0.4s ease;
+  transform-origin: center center;
+  will-change: transform, filter;
+  text-decoration: none;
+  display: block;
+}
+.other-designs-image {
+  width: 220px;
+  height: 280px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: var(--surface);
+}
+.other-designs-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.other-designs-caption {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  max-width: 220px;
+  line-height: 1.4;
+}
+.other-designs-item:hover {
+  filter: grayscale(0%);
+  transform: scale(1.2);
+  z-index: 5;
+  position: relative;
+}
+@keyframes other-designs-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 767px) {
+  .other-designs-item { width: 160px; }
+  .other-designs-image { width: 160px; height: 200px; }
+  .other-designs-caption { max-width: 160px; font-size: 11px; }
+  .other-designs-item:hover { transform: scale(1.15); }
+}
+
+/* 6. Accessibility Motion Overrides */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
